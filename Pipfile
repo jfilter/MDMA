@@ -1,0 +1,31 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+name = "pypi"
+verify_ssl = true
+
+
+[dev-packages]
+
+ipython = "*"
+bpython = "*"
+pudb = "*"
+pylint = "*"
+isort = "*"
+"autopep8" = "*"
+
+
+[packages]
+
+django = "*"
+django-extensions = "*"
+django-dotenv = "*"
+django-redis = "*"
+"psycopg2-binary" = "*"
+pytest = "*"
+pytest-cov = "*"
+raven = "*"
+shortuuid = "*"
+uwsgi = "*"
+werkzeug = "*"
+whitenoise = "*"
