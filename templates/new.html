@@ -5,13 +5,16 @@
 {% block title %}{% trans "New" %}{% endblock %}
 
 {% block content %}
-<h2>New</h2>
-<p>Upload a picture or choose one from your uploaded onces</p>
+<h2>New Work</h2>
+<h3>1. Upload an Image</h3>
+<p>The image will be cropped into a square. The length and width of your images should at least be 400 pixels. You can upload your images as JPG or PNG.</p>
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Upload</button>
 </form>
+<br />
+<a href="{% url 'my_input_images' %}">or select an already uploaded image</a> <br/>
 
 {% endblock %}

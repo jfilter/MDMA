@@ -4,7 +4,7 @@ RUN apt-get update
 RUN apt-get install -y swig libssl-dev dpkg-dev netcat
 
 RUN pip install -U pip pipenv==11.9.0
-ADD Pipfile* /code/
+ADD Pipfile /code/
 WORKDIR /code
 
 RUN ln -sf /usr/local/bin/python /bin/python

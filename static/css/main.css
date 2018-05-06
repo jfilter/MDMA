@@ -27,6 +27,8 @@ header {
 }
 
 footer {
+  margin-top: 1rem;
+  padding-top: 1rem;
   border-top: 1px whitesmoke solid;
 }
 
@@ -43,4 +45,8 @@ header .right {
 header h1 a {
   color: inherit;
   text-decoration: inherit;
+}
+
+.input_images img {
+  width: 100px;
 }
