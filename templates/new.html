@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "New" %}{% endblock %}
+
+{% block content %}
+<h2>New</h2>
+<p>Upload a picture or choose one from your uploaded onces</p>
+
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Upload</button>
+</form>
+
+{% endblock %}

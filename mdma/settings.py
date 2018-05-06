@@ -27,7 +27,8 @@ SECRET_KEY = os.getenv("SECRET_KEY", 'override me')
 DEBUG = True if os.getenv("NODEBUG") is None else False
 
 # TODO: Change your domain names here.
-ALLOWED_HOSTS = ["web", "localhost"] if os.getenv("NODEBUG") is None else [".mdma.vis.one"]
+ALLOWED_HOSTS = ["web", "localhost"] if os.getenv(
+    "NODEBUG") is None else [".mdma.vis.one"]
 
 # Application definition
 
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'raven.contrib.django.raven_compat',
     'main',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -197,7 +199,8 @@ USE_TZ = True
 
 SITE_ID = 1
 
-RAVEN_CONFIG = {"dsn": os.getenv("RAVEN_DSN")}  # type: Dict[str, Union[None, str]]
+# type: Dict[str, Union[None, str]]
+RAVEN_CONFIG = {"dsn": os.getenv("RAVEN_DSN")}
 
 LOGGING = {
     'version': 1,
@@ -240,3 +243,15 @@ try:
     MIDDLEWARE += LOCAL_MIDDLEWARE
 except:  # noqa
     pass
+
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.twitter.TwitterOAuth',
+)
+
+SOCIAL_AUTH_TWITTER_KEY = os.getenv("SOCIAL_AUTH_TWITTER_KEY")
+SOCIAL_AUTH_TWITTER_SECRET = os.getenv("SOCIAL_AUTH_TWITTER_SECRET")
+
+LOGIN_REDIRECT_URL = 'profile'
+LOGIN_URL = '/'

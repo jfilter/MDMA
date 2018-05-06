@@ -1,1 +1,46 @@
-body {}
+body {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 14px;
+  line-height: 1.428;
+
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+}
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+header {
+  border-bottom: 1px whitesmoke solid;
+  position: relative;
+}
+
+footer {
+  border-top: 1px whitesmoke solid;
+}
+
+header h1 {
+  margin: 0;
+}
+
+header .right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+header h1 a {
+  color: inherit;
+  text-decoration: inherit;
+}
