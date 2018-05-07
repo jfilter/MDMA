@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "My Input Images" %}{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+{% if public %}
+  <h2>Public Input Images</h2>
+{% else %}
+  <h2>My Input Images</h2>
+{% endif %}
+
+<div class="image-grid">
+  {% for image in images %}
+    <div>
+      <img src="/{{ image.image.url }}" /> <br/>
+      Description: {{image.description}} <br />
+      Copyright Notice: {{image.copyright_notice}} <br />
+
+      {% if not public %}
+        Visibility: {{image.get_visibility_display}} <br />
+      {% endif %}
+
+      {% if style_image_id %}
+        <a href="{% url 'choose_parameters' input_image_id=image.id style_image_id=style_image_id %}">choose for new artwork</a> <br>
+      {% else %}
+        <a href="{% url 'choose_style' input_image_id=image.id%}">choose for new artwork</a> <br>
+      {% endif %}
+      {% if image.user == user %}
+        <a href="{% url 'input_image' input_image_id=image.id %}">edit</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+
+{% include "partials/pagination.html" with paginator=images %}
+
+{% endblock %}

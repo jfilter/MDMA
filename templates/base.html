@@ -13,11 +13,12 @@
     <h1 class="left"><a href="{% url 'index' %}">MDMA – Make Deep Art Acessible</a></h1>
     {% if user.is_authenticated %}
         <nav class="right">
-          Welcome {{ user.username }}!<br><a href="{% url 'index' %}">home</a> <a href="{% url 'logout' %}">my works</a> <a href="{% url 'profile' %}">profile</a>
+          Welcome {{ user.username }}!<br><a href="{% url 'index' %}">home</a> <a href="{% url 'new' %}">new</a>
+           <a href="{% url 'artworks' %}">artworks</a> <a href="{% url 'profile' %}">profile</a>
         </nav>
         {% else %}
         <nav class="right">
-          <a href="{% url "social:begin" "twitter" %}">Login w/ Twitter</a>
+          <a href="{% url "social:begin" "twitter" %}">login with<br/>twitter</a>
         </nav>
     {% endif %}
   </header>

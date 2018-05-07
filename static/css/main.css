@@ -7,6 +7,14 @@ body {
   margin: 0 auto;
 }
 
+a,
+a:hover,
+a:active,
+a:link,
+a:visited {
+  color: #006bf9;
+}
+
 .left {
   float: left;
 }
@@ -43,10 +51,24 @@ header .right {
 }
 
 header h1 a {
-  color: inherit;
+  color: inherit !important;
   text-decoration: inherit;
 }
 
-.input_images img {
-  width: 100px;
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: -15px;
+}
+
+.image-grid > * {
+  padding: 15px;
+}
+
+.image-grid img {
+  width: 200px;
+}
+
+.small-image {
+  width: 200px;
 }

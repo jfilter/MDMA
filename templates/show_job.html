@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block content %}
+<h2>Artwork #{{job.id}}</h3>
+  {% if job.output_image %}
+    <img src="/{{ job.output_image.url }}" />
+  {% endif %}
+    <img class="small-image" src="/{{ job.input_image.image.url }}" />
+    <img class="small-image" src="/{{ job.style_image.image.url }}" />
+    <br />
+    Content Weight: {{job.content_weight}} <br/>
+    Style Weight: {{job.style_weight}} <br/>
+    Number of Interations: {{job.num_steps}} <br/>
+    Status: {{job.get_status_display}} <br/>
+    created_at: {{job.created_at}} <br/>
+    job_started_at: {{job.job_started_at}} <br/>
+    job_finished_at: {{job.job_finished_at}} <br/>
+    log: {{job.log}} <br/>
+
+    {% if job.visibility == 1 %}
+      Link: <a href="{% url 'unlisted_job' job_uuid=job.uuid %}">{{request.get_host}}/artworks/{{job.uuid}}/</a> <br />
+    {% endif %}
+
+    {% if job.visibility == 2 %}
+      Link: <a href="{% url 'artwork' job_id=job.id %}">{{request.get_host}}/artworks/{{job.id}}/</a> <br />
+    {% endif %}
+
+    {% if form %}
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+      </form>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+      <br />
+      <a href="{% url 'choose_parameters' input_image_id=job.input_image.id style_image_id=job.style_image.id %}">create new artwork with both images</a> (but choose different parameters 😉) <br/>
+      <br/>or<br/><br/>
+      <a href="{% url 'choose_style' input_image_id=job.input_image.id %}">create new artwork with this input image</a> <br/>
+      <br/>or<br/><br/>
+      <a href="{% url 'new' %}?style_image={{job.style_image.id}}">create new artwork with this style image</a> <br/>
+    {% endif %}
+
+
+{% endblock %}

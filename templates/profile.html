@@ -6,6 +6,7 @@
 
 {% block content %}
   <h2>Profile</h2>
-  <a href="{% url 'my_input_images' %}">My Input Images</a> <br/>
+  <a href="{% url 'my_input_images' %}">my input images</a> <br/>
+  <a href="{% url 'artworks' %}?my">my artworks</a> <br/>
   <a href="{% url 'logout' %}">logout</a>
   {% endblock %}

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "My Input Images" %}{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+{% if my %}
+  <h2>My Artworks</h2>
+{% else %}
+  <h2>Artworks</h2>
+{% endif %}
+
+{% include "partials/image_grid.html" with jobs=jobs %}
+
+{% include "partials/pagination.html" with paginator=jobs %}
+
+{% endblock %}

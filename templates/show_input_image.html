@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block content %}
+<div>
+    <img src="/{{ input_image.image.url }}" />
+
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Update</button>
+    </form>
+
+    <a href="/my_input_images">Go Back</a>
+</div>
+
+{% endblock %}
