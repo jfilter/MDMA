@@ -14,8 +14,7 @@
     <h1><a href="{% url 'index' %}">MDMA – Make Deep Art Accessible</a></h1>
     {% if user.is_authenticated %}
         <nav class="nav-links">
-          Welcome {{ user.username }}!<br><a href="{% url 'index' %}">home</a> <a href="{% url 'new' %}">create artwork</a>
-           <a href="{% url 'artworks' %}">show artworks</a> <a href="{% url 'profile' %}">profile</a>
+          Welcome {{ user.username }}!<br><a href="{% url 'index' %}">home</a><a href="{% url 'new' %}">create artwork</a><a href="{% url 'artworks' %}">show artworks</a><a href="{% url 'profile' %}">profile</a>
         </nav>
         {% else %}
         <nav>

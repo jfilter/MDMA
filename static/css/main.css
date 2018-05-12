@@ -73,11 +73,11 @@ header h1 a {
 }
 
 footer a {
-  padding: 0 1rem;
+  padding: 0 0.5rem;
 }
 
 footer a:first-child {
-  padding: 0 1rem 0 0;
+  padding: 0 0.5rem 0 0;
 }
 
 .errorlist {
