@@ -31,7 +31,7 @@ class InputImageForm(forms.ModelForm):
 class ChooseParamtersForm(forms.ModelForm):
     class Meta:
         model = Job
-        fields = ('visibility', 'style_weight', 'content_weight', 'num_steps')
+        fields = ('visibility', 'style_weight')
 
 
 class UpdateVisiblityJobForm(forms.ModelForm):

@@ -7,9 +7,7 @@ verify_ssl = true
 
 [dev-packages]
 
-ipython = "*"
-bpython = "*"
-pudb = "*"
+
 pylint = "*"
 isort = "*"
 "autopep8" = "*"

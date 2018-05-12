@@ -1,13 +1,24 @@
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.shortcuts import render, redirect
-from django.contrib.auth import logout as auth_logout, login
+import base64
+
+from django.contrib.auth import logout as auth_logout
+from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
-from django.http import Http404
+from django.core.files import File
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.serializers import serialize
+from django.db import transaction
+from django.http import Http404, HttpResponse, JsonResponse
+from django.shortcuts import redirect, render
+from django.utils import timezone
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_GET, require_POST
 
-
-from .forms import InputImageForm, ChooseParamtersForm, UpdateVisiblityJobForm, UpdateInputImageForm
-from .models import InputImage, StyleImage, Job, VISIBILITY_UNLISTED, VISIBILITY_PUBLIC, VISIBILITY_PRIVATE
+from .forms import ChooseParamtersForm, InputImageForm, UpdateInputImageForm, UpdateVisiblityJobForm
+from .models import (
+    STATUS_FINISHED, STATUS_WATING, STATUS_WORKING, VISIBILITY_PRIVATE, VISIBILITY_PUBLIC, VISIBILITY_UNLISTED,
+    InputImage, Job, StyleImage,
+)
 
 
 def index(request):
@@ -80,7 +91,7 @@ def choose_parameters(request, input_image_id, style_image_id):
             s.input_image = input_image
             s.style_image = style_image
             s.save()
-            return redirect('/artwork/' + str(s.id))
+            return redirect('/artworks/' + str(s.id))
         print('not valid')
     else:
         form = ChooseParamtersForm()
@@ -181,3 +192,58 @@ def show_unlisted_job(request, job_uuid):
         raise PermissionDenied
 
     return render(request, 'show_job.html', {'job': job})
+
+
+@require_GET
+def get_jobs(request):
+    auth_header = request.META.get('HTTP_AUTHORIZATION', '')
+    token_type, _, credentials = auth_header.partition(' ')
+
+    expected = base64.b64encode(b'username:password').decode()
+
+    if token_type != 'Basic' or credentials != expected:
+        return HttpResponse(status=401)
+
+    limit = int(request.GET.get('num', 10))
+
+    with transaction.atomic():
+        waiting_jobs = Job.objects.select_for_update().filter(
+            status=STATUS_WATING)[:limit]
+
+        waiting_jobs.job_started_at = timezone.now()
+        waiting_jobs.status = STATUS_WORKING
+        waiting_jobs.save()
+
+    data = serialize('json', list(waiting_jobs), fields=(
+        'pk', 'style_weight', 'input_image', 'style_image'), use_natural_foreign_keys=True)
+
+    return JsonResponse({'jobs': data})
+
+
+@csrf_exempt
+@require_POST
+def upload_finished_job(request, job_id):
+    auth_header = request.META.get('HTTP_AUTHORIZATION', '')
+    token_type, _, credentials = auth_header.partition(' ')
+
+    expected = base64.b64encode(b'username:password').decode()
+
+    if token_type != 'Basic' or credentials != expected:
+        return HttpResponse(status=401)
+
+    print(request.FILES)
+
+    # can't proceed without files
+    if len(request.FILES) != 1:
+        return HttpResponse(status=422)
+
+    job = Job.objects.get(pk=job_id)
+
+    job.output_image.save(name='outputimage.jpg',
+                          content=request.FILES['file'])
+    job.status = STATUS_FINISHED
+    job.finished_at = timezone.now()
+    job.save()
+
+    # successfully processed the request
+    return HttpResponse(status=204)

@@ -15,6 +15,5 @@ ADD misc/dokku/CHECKS /app/
 ADD misc/dokku/* /code/
 
 COPY . /code/
-RUN chmod +x /code/manage.py
 RUN /code/manage.py collectstatic --noinput
 RUN /code/manage.py migrate

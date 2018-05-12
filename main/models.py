@@ -11,9 +11,9 @@ VISIBILITY_UNLISTED = 1
 VISIBILITY_PUBLIC = 2
 
 VISIBILITY_CHOICES = (
-    (VISIBILITY_PRIVATE, 'private'),
-    (VISIBILITY_UNLISTED, 'unlisted'),
     (VISIBILITY_PUBLIC, 'public'),
+    (VISIBILITY_UNLISTED, 'unlisted'),
+    (VISIBILITY_PRIVATE, 'private'),
 )
 
 STATUS_WATING = 0
@@ -29,9 +29,17 @@ STATUS_CHOICES = (
 )
 
 
-def random_input_image_file_path(instance, filename):
+def random_file_path(prefix, filename):
     suffix = pathlib.Path(filename).suffix
-    return 'static/images/input/' + shortuuid.ShortUUID().random(length=50) + suffix
+    return prefix + shortuuid.ShortUUID().random(length=50) + suffix
+
+
+def random_input_image_file_path(instance, filename):
+    return random_file_path('static/images/input/', filename)
+
+
+def random_output_image_file_path(instance, filename):
+    return random_file_path('static/images/output/', filename)
 
 
 class User(AbstractUser):
@@ -39,20 +47,26 @@ class User(AbstractUser):
 
 
 class InputImage(models.Model):
+    def natural_key(self):
+        return (self.image.url)
+
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     description = models.TextField()
     copyright_notice = models.TextField()
-    image = models.FileField(upload_to=random_input_image_file_path, validators=[
-                             FileExtensionValidator(['jpg', 'png'])])
+    image = models.ImageField(upload_to=random_input_image_file_path, validators=[
+        FileExtensionValidator(['jpg', 'png'])])
     uploaded_at = models.DateTimeField(auto_now_add=True)
     visibility = models.IntegerField(
         choices=VISIBILITY_CHOICES, default=VISIBILITY_CHOICES[0][0])
 
 
 class StyleImage(models.Model):
+    def natural_key(self):
+        return (self.image.url)
+
     description = models.TextField()
     copyright_notice = models.TextField()
-    image = models.FileField(
+    image = models.ImageField(
         upload_to='static/images/style', validators=[FileExtensionValidator(['jpg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -67,14 +81,14 @@ class Job(models.Model):
         choices=VISIBILITY_CHOICES, default=VISIBILITY_CHOICES[0][0])
     status = models.IntegerField(choices=STATUS_CHOICES,
                                  default=STATUS_CHOICES[0][0])
-    log = models.TextField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     job_started_at = models.DateTimeField(null=True)
     job_finished_at = models.DateTimeField(null=True)
-    num_steps = models.IntegerField(default=300, validators=[
-        MaxValueValidator(500), MinValueValidator(10)])
-    style_weight = models.IntegerField(default=1000)
-    content_weight = models.IntegerField(default=1)
+    style_weight = models.FloatField(null=True, default=1, validators=[
+        MaxValueValidator(1),
+        MinValueValidator(0)
+    ])
     uuid = models.CharField(max_length=50, blank=True, unique=True,
                             default=shortuuid.ShortUUID().random(length=50))
-    output_image = models.FileField(null=True)
+    output_image = models.ImageField(
+        null=True, upload_to=random_output_image_file_path)

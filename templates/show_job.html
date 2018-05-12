@@ -7,19 +7,16 @@
 {% block content %}
 <h2>Artwork #{{job.id}}</h3>
   {% if job.output_image %}
-    <img src="/{{ job.output_image.url }}" />
+    <img src="/{{ job.output_image.url }}" /> <br />
   {% endif %}
     <img class="small-image" src="/{{ job.input_image.image.url }}" />
     <img class="small-image" src="/{{ job.style_image.image.url }}" />
     <br />
-    Content Weight: {{job.content_weight}} <br/>
     Style Weight: {{job.style_weight}} <br/>
-    Number of Interations: {{job.num_steps}} <br/>
     Status: {{job.get_status_display}} <br/>
     created_at: {{job.created_at}} <br/>
     job_started_at: {{job.job_started_at}} <br/>
     job_finished_at: {{job.job_finished_at}} <br/>
-    log: {{job.log}} <br/>
 
     {% if job.visibility == 1 %}
       Link: <a href="{% url 'unlisted_job' job_uuid=job.uuid %}">{{request.get_host}}/artworks/{{job.uuid}}/</a> <br />
