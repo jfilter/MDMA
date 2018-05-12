@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% load i18n %}
+
+{% block title %}{% trans "Home" %}{% endblock %}
+
+{% block content %}
+
+<h2>About</h2>
+
+<p>
+  We are currently in development. More info in the <a href="https://hackdash.org/projects/5ad235fb35377d7f73a9a157">hackdash</a>. <br /> <br />
+
+  The code is on <a href="https://github.com/jfilter/MDMA">github</a>. <br /> <br />
+
+  We are using "Universal Style Transfer via Feature Transforms" by Li, Yijun and Fang, Chen and Yang, Jimei and Wang, Zhaowen and Lu, Xin and Yang, Ming-Hsuan. Here is the <a href="https://github.com/sunshineatnoon/PytorchWCT">code</a> and the <a href="https://arxiv.org/pdf/1705.08086.pdf">paper</a>. It has some advantages over <a href="https://towardsdatascience.com/a-brief-introduction-to-neural-style-transfer-d05d0403901d">traditional neural style transfer</a>. It promises to work better on unseen patterns which we have a lot in our data. In addition, it's fast and efficient so we produce 600x600 px images with a GPU with only 4GB RAM.
+</p>
+
+{% endblock %}

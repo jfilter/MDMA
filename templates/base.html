@@ -10,7 +10,7 @@
 </head>
 <body>
   <header class="group">
-    <h1 class="left"><a href="{% url 'index' %}">MDMA – Make Deep Art Acessible</a></h1>
+    <h1 class="left"><a href="{% url 'index' %}">MDMA – Make Deep Art Acessible</a></h1>
     {% if user.is_authenticated %}
         <nav class="right">
           Welcome {{ user.username }}!<br><a href="{% url 'index' %}">home</a> <a href="{% url 'new' %}">new</a>
@@ -24,6 +24,22 @@
   </header>
     {% block content %}
     {% endblock %}
-  <footer>CodingDaVinci Ost – Kontakt – Twitter</footer>
+  <footer><a href="/about">about</a><a href="https://johannesfilter.com/contact/">contact</a><a href="/legal">serious legal issues</a><a href="https://codingdavinci.de/events/ost/">coding dav inci ost 2018</a><a href="https://twitter.com/mdma_art">twitter</a></footer>
 </body>
+<!-- Matomo -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//vis.one/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '3']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//vis.one/piwik/piwik.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Matomo Code -->
 </html>

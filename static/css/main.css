@@ -2,6 +2,7 @@ body {
   font-family: "Times New Roman", Times, serif;
   font-size: 14px;
   line-height: 1.428;
+  color: #292b2c;
 
   max-width: 50rem;
   margin: 0 auto;
@@ -71,4 +72,12 @@ header h1 a {
 
 .small-image {
   width: 200px;
+}
+
+footer a {
+  padding: 0 1rem;
+}
+
+footer a:first-child {
+  padding: 0 1rem 0 0;
 }

@@ -7,7 +7,12 @@
 {% block content %}
 
 {% if user.is_authenticated %}
-<a href="{% url 'new' %}">new</a>
+  <h2><a href="{% url 'new' %}">create artwork</a></h2>
+{% else %}
+  <h2>Welcome!</h2>
+  <p>
+    Please login <a href="{% url "social:begin" "twitter" %}">login with twitter</a> to create artworks!
+  </p>
 {% endif %}
 
 <h3>Most Recent</h3>

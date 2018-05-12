@@ -27,6 +27,14 @@ def index(request):
     return render(request, "index.html", {'jobs': jobs})
 
 
+def about(request):
+    return render(request, "pages/about.html")
+
+
+def legal(request):
+    return render(request, "pages/legal.html")
+
+
 @login_required
 def profile(request):
     return render(request, "profile.html")

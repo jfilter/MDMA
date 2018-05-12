@@ -6,6 +6,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
+    path('about/', views.about, name="about"),
+    path('legal/', views.legal, name="legal"),
     path('profile/', views.profile, name="profile"),
     path('logout/', views.logout, name="logout"),
     path('new/', views.upload_input_image, name="new"),
