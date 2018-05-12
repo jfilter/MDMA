@@ -51,10 +51,11 @@ class InputImage(models.Model):
         return (self.image.url)
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    description = models.TextField()
-    copyright_notice = models.TextField()
     image = models.ImageField(upload_to=random_input_image_file_path, validators=[
         FileExtensionValidator(['jpg', 'png'])])
+    title = models.CharField(max_length=255, blank=True, null=True)
+    public_domain = models.BooleanField(default=False)
+    copyright_notice = models.TextField(blank=True, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
     visibility = models.IntegerField(
         choices=VISIBILITY_CHOICES, default=VISIBILITY_CHOICES[0][0])
@@ -63,8 +64,7 @@ class InputImage(models.Model):
 class StyleImage(models.Model):
     def natural_key(self):
         return (self.image.url)
-
-    description = models.TextField()
+    title = models.CharField(max_length=255)
     copyright_notice = models.TextField()
     image = models.ImageField(
         upload_to='static/images/style', validators=[FileExtensionValidator(['jpg'])])
@@ -88,7 +88,7 @@ class Job(models.Model):
         MaxValueValidator(1),
         MinValueValidator(0)
     ])
-    uuid = models.CharField(max_length=50, blank=True, unique=True,
+    uuid = models.CharField(max_length=50, unique=True,
                             default=shortuuid.ShortUUID().random(length=50))
     output_image = models.ImageField(
         null=True, upload_to=random_output_image_file_path)

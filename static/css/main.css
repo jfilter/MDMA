@@ -36,7 +36,7 @@ header {
 }
 
 footer {
-  margin-top: 1rem;
+  margin: 1rem 0;
   padding-top: 1rem;
   border-top: 1px whitesmoke solid;
 }
@@ -80,4 +80,20 @@ footer a {
 
 footer a:first-child {
   padding: 0 1rem 0 0;
+}
+
+.errorlist {
+  border: 1px dashed red;
+}
+
+nav.nav-links a {
+  padding: 0 0.5rem;
+}
+
+nav.nav-links a:last-child {
+  padding: 0 0 0 0.5rem;
+}
+
+nav.nav-links a:nth-child(2) {
+  padding: 0 0.5rem 0 0;
 }

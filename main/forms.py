@@ -1,17 +1,35 @@
-from django import forms
-
 from PIL import Image, ImageOps
 
-from .models import InputImage, Job
+from django import forms
+from django.forms import NumberInput
 
+from .models import InputImage, Job
 
 OUTPUT_IMAGE_SIZE = 600
 
 
 class InputImageForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(InputImageForm, self).__init__(*args, **kwargs)
+        self.fields['title'].label = 'Title (optional)'
+        self.fields['copyright_notice'].label = 'Copyright notice (if it\'s not your image)'
+        self.fields[
+            'public_domain'].label = 'This image is my own work. I hereby waive all copyright and related or neighboring rights together with all associated claims and causes of action with respect to this work to the extent possible under the law ("CC0")'
+
     class Meta:
         model = InputImage
-        fields = ('description', 'copyright_notice', 'image', 'visibility')
+        fields = ('image', 'title', 'public_domain',
+                  'copyright_notice', 'visibility')
+
+    def clean(self):
+        cleaned_data = super().clean()
+        pubic_domain = cleaned_data.get("public_domain")
+        copyright_notice = cleaned_data.get("copyright_notice")
+
+        if not pubic_domain and (copyright_notice is None or copyright_notice == ''):
+            raise forms.ValidationError(
+                "If this is not your image or you don't want to release it into public domain, please write a copy right notice. If you upload works that are in the public domain (\"CC0\"), just make a short remark in the copyright notice field. Thanks!"
+            )
 
     def save(self):
         image = super(InputImageForm, self).save()
@@ -29,6 +47,15 @@ class InputImageForm(forms.ModelForm):
 
 
 class ChooseParamtersForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['style_weight'].widget = NumberInput(
+            attrs={'type': 'range', 'min': '0', 'max': '100', 'steps': '0.01'})
+
+    def clean_style_weight(self):
+        style_weight = float(self.cleaned_data['style_weight'])
+        return style_weight / 100
+
     class Meta:
         model = Job
         fields = ('visibility', 'style_weight')
@@ -43,4 +70,4 @@ class UpdateVisiblityJobForm(forms.ModelForm):
 class UpdateInputImageForm(forms.ModelForm):
     class Meta:
         model = InputImage
-        fields = ('visibility', 'description', 'copyright_notice')
+        fields = ('visibility', 'title', 'public_domain', 'copyright_notice',)

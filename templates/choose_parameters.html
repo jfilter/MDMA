@@ -5,15 +5,15 @@
 {% block title %}{% trans "Choose Parameters – New Artwork" %}{% endblock %}
 
 {% block content %}
-<h2>New Artwork</h2>
+<h2>create a new artwork</h2>
 
-<h3>1. Choose Input Image</h3>
+<h3>1. choose input image</h3>
 <img class="small-image" src="/{{ input_image.image.url }}" />
 <br /><a href="{% url 'new' %}?style_image={{style_image.id}}">choose other input image</a>
-<h3>2. Choose Style Image</h3>
+<h3>2. choose style image</h3>
 <img class="small-image" src="/{{ style_image.image.url }}" />
 <br /><a href="{% url 'choose_style' input_image_id=input_image.id %}">choose other style image</a>
-<h3>3. Choose Parameters</h3>
+<h3>3. choose settings</h3>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}

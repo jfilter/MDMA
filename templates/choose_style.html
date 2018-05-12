@@ -5,18 +5,18 @@
 {% block title %}{% trans "Choose Style - New Artwork" %}{% endblock %}
 
 {% block content %}
-<h2>New Artwork</h2>
-<h3>1. Choose Input Image</h3>
+<h2>create a new artwork</h2>
+<h3>1. choose input image</h3>
 <img class="small-image" src="/{{ input_image.image.url }}" />
 <br /><a href="{% url 'new' %}">choose other input image</a>
-<h3>2. Choose Style Image</h3>
+<h3>2. choose style image</h3>
 
 <div class="image-grid">
   {% for image in style_images %}
     <div>
       <img src="/{{ image.image.url }}" /><br/>
-      Description: {{image.description}}<br/>
-      Copyright Notice: {{image.copyright_notice}}<br/>
+      title: {{image.title}}<br/>
+      copyright notice: {{image.copyright_notice}}<br/>
       <a href="{{image.id}}/">choose</a>
     </div>
   {% endfor %}

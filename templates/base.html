@@ -10,11 +10,11 @@
 </head>
 <body>
   <header class="group">
-    <h1 class="left"><a href="{% url 'index' %}">MDMA – Make Deep Art Acessible</a></h1>
+    <h1 class="left"><a href="{% url 'index' %}">MDMA – Make Deep Art Accessible</a></h1>
     {% if user.is_authenticated %}
-        <nav class="right">
-          Welcome {{ user.username }}!<br><a href="{% url 'index' %}">home</a> <a href="{% url 'new' %}">new</a>
-           <a href="{% url 'artworks' %}">artworks</a> <a href="{% url 'profile' %}">profile</a>
+        <nav class="right nav-links">
+          Welcome {{ user.username }}!<br><a href="{% url 'index' %}">home</a> <a href="{% url 'new' %}">create artwork</a>
+           <a href="{% url 'artworks' %}">show artworks</a> <a href="{% url 'profile' %}">profile</a>
         </nav>
         {% else %}
         <nav class="right">
@@ -24,7 +24,7 @@
   </header>
     {% block content %}
     {% endblock %}
-  <footer><a href="/about">about</a><a href="https://johannesfilter.com/contact/">contact</a><a href="/legal">serious legal issues</a><a href="https://codingdavinci.de/events/ost/">coding dav inci ost 2018</a><a href="https://twitter.com/mdma_art">twitter</a></footer>
+  <footer><a href="/about">about</a><a href="https://johannesfilter.com/contact/">contact</a><a href="/legal">serious legal issues</a><a href="https://codingdavinci.de/events/ost/">coding da vinci ost 2018</a><a href="https://twitter.com/mdma_art">twitter</a></footer>
 </body>
 <!-- Matomo -->
 <script type="text/javascript">

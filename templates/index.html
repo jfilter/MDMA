@@ -9,13 +9,13 @@
 {% if user.is_authenticated %}
   <h2><a href="{% url 'new' %}">create artwork</a></h2>
 {% else %}
-  <h2>Welcome!</h2>
+  <h2>welcome!</h2>
   <p>
     Please login <a href="{% url "social:begin" "twitter" %}">login with twitter</a> to create artworks!
   </p>
 {% endif %}
 
-<h3>Most Recent</h3>
+<h3>most recent</h3>
 
 {% include "partials/image_grid.html" with jobs=jobs %}
 

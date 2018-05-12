@@ -5,18 +5,31 @@
 {% block title %}{% trans "Home" %}{% endblock %}
 
 {% block content %}
-<h2>Artwork #{{job.id}}</h3>
+<h2>artwork #{{job.id}}</h3>
   {% if job.output_image %}
     <img src="/{{ job.output_image.url }}" /> <br />
   {% endif %}
     <img class="small-image" src="/{{ job.input_image.image.url }}" />
     <img class="small-image" src="/{{ job.style_image.image.url }}" />
     <br />
-    Style Weight: {{job.style_weight}} <br/>
-    Status: {{job.get_status_display}} <br/>
-    created_at: {{job.created_at}} <br/>
-    job_started_at: {{job.job_started_at}} <br/>
-    job_finished_at: {{job.job_finished_at}} <br/>
+    style weight: {{job.style_weight}} <br/>
+    status: {{job.get_status_display}} <br/>
+    created at: {{job.created_at}} <br/>
+    job started at: {{job.job_started_at}} <br/>
+    job finished at: {{job.job_finished_at}} <br/>
+    {% if job.input_image.title != '' %}
+      input image title: {{job.input_image.title}} <br />
+    {% endif %}
+    {% if job.input_image.copyright_notice != '' %}
+      input image copyright notice: {{job.input_image.copyright_notice}} <br />
+    {% endif %}
+    {% if job.style_image.title != '' %}
+      style image title: {{job.style_image.title}} <br />
+    {% endif %}
+    {% if job.style_image.copyright_notice != '' %}
+      style image copyright notice: {{job.style_image.copyright_notice}} <br />
+    {% endif %}
+
 
     {% if job.visibility == 1 %}
       Link: <a href="{% url 'unlisted_job' job_uuid=job.uuid %}">{{request.get_host}}/artworks/{{job.uuid}}/</a> <br />
@@ -36,11 +49,11 @@
 
     {% if user.is_authenticated %}
       <br />
-      <a href="{% url 'choose_parameters' input_image_id=job.input_image.id style_image_id=job.style_image.id %}">create new artwork with both images</a> (but choose different parameters 😉) <br/>
+      <a href="{% url 'choose_parameters' input_image_id=job.input_image.id style_image_id=job.style_image.id %}">create new artwork with the same images</a> (but choose a different style weight 😉) <br/>
       <br/>or<br/><br/>
-      <a href="{% url 'choose_style' input_image_id=job.input_image.id %}">create new artwork with this input image</a> <br/>
+      <a href="{% url 'choose_style' input_image_id=job.input_image.id %}">create new artwork with this input image</a> (but choose other style image) <br/>
       <br/>or<br/><br/>
-      <a href="{% url 'new' %}?style_image={{job.style_image.id}}">create new artwork with this style image</a> <br/>
+      <a href="{% url 'new' %}?style_image={{job.style_image.id}}">create new artwork with this style image</a> (but choose other input image)<br/>
     {% endif %}
 
 

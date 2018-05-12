@@ -9,17 +9,17 @@
 {% load static %}
 
 {% if public %}
-  <h2>Public Input Images</h2>
+  <h2>public input images</h2>
 {% else %}
-  <h2>My Input Images</h2>
+  <h2>my input images</h2>
 {% endif %}
 
 <div class="image-grid">
   {% for image in images %}
     <div>
       <img src="/{{ image.image.url }}" /> <br/>
-      Description: {{image.description}} <br />
-      Copyright Notice: {{image.copyright_notice}} <br />
+      title: {{image.title}} <br />
+      copyright Notice: {{image.copyright_notice}} <br />
 
       {% if not public %}
         Visibility: {{image.get_visibility_display}} <br />
