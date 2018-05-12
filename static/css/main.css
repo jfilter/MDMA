@@ -5,6 +5,7 @@ body {
   color: #292b2c;
 
   max-width: 50rem;
+  padding: 0.5rem;
   margin: 0 auto;
 }
 
@@ -16,18 +17,15 @@ a:visited {
   color: #006bf9;
 }
 
-.left {
-  float: left;
+.group {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  /* margin: 0 -1rem; */
 }
 
-.right {
-  float: right;
-}
-
-.group:after {
-  content: "";
-  display: table;
-  clear: both;
+.group > * {
+  /* padding: 0 1rem; */
 }
 
 header {
