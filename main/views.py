@@ -1,4 +1,5 @@
 import base64
+import os
 
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login
@@ -35,6 +36,20 @@ def legal(request):
     return render(request, "pages/legal.html")
 
 
+def valid_basic_auth(request):
+    auth_header = request.META.get('HTTP_AUTHORIZATION', '')
+    token_type, _, credentials = auth_header.partition(' ')
+
+    username = os.getenv("VERY_SECRET_BASIC_AUTH_USERNAME")
+    password = os.getenv("VERY_SECRET_BASIC_AUTH_PASSWORD")
+
+    # not sure if this has to be done like this
+    u_p_str = username + ':' + password
+    expected = base64.b64encode(u_p_str.encode('ascii')).decode()
+
+    return token_type == 'Basic' and credentials == expected
+
+
 @login_required
 def profile(request):
     return render(request, "profile.html")
@@ -42,7 +57,6 @@ def profile(request):
 
 @login_required
 def logout(request):
-    """Logs out user"""
     auth_logout(request)
     return redirect('/')
 
@@ -100,7 +114,6 @@ def choose_parameters(request, input_image_id, style_image_id):
             s.style_image = style_image
             s.save()
             return redirect('/artworks/' + str(s.id))
-        print('not valid')
     else:
         form = ChooseParamtersForm()
     return render(request, 'choose_parameters.html', {
@@ -205,25 +218,22 @@ def show_unlisted_job(request, job_uuid):
 
 @require_GET
 def get_jobs(request):
-    auth_header = request.META.get('HTTP_AUTHORIZATION', '')
-    token_type, _, credentials = auth_header.partition(' ')
-
-    expected = base64.b64encode(b'username:password').decode()
-
-    if token_type != 'Basic' or credentials != expected:
+    if not valid_basic_auth(request):
         return HttpResponse(status=401)
 
     limit = int(request.GET.get('num', 10))
 
     with transaction.atomic():
-        waiting_jobs = Job.objects.select_for_update().filter(
+        waiting_jobs = Job.objects.filter(
             status=STATUS_WATING)[:limit]
 
-        waiting_jobs.job_started_at = timezone.now()
-        waiting_jobs.status = STATUS_WORKING
-        waiting_jobs.save()
+        # we have to do this here before the update or the jobs are lost
+        waiting_jobs_list = list(waiting_jobs)
 
-    data = serialize('json', list(waiting_jobs), fields=(
+        Job.objects.filter(id__in=waiting_jobs).update(job_started_at=timezone.now(),
+                                                       status=STATUS_WORKING)
+
+    data = serialize('json', waiting_jobs_list, fields=(
         'pk', 'style_weight', 'input_image', 'style_image'), use_natural_foreign_keys=True)
 
     return JsonResponse({'jobs': data})
@@ -232,15 +242,8 @@ def get_jobs(request):
 @csrf_exempt
 @require_POST
 def upload_finished_job(request, job_id):
-    auth_header = request.META.get('HTTP_AUTHORIZATION', '')
-    token_type, _, credentials = auth_header.partition(' ')
-
-    expected = base64.b64encode(b'username:password').decode()
-
-    if token_type != 'Basic' or credentials != expected:
+    if not valid_basic_auth(request):
         return HttpResponse(status=401)
-
-    print(request.FILES)
 
     # can't proceed without files
     if len(request.FILES) != 1:
@@ -251,7 +254,7 @@ def upload_finished_job(request, job_id):
     job.output_image.save(name='outputimage.jpg',
                           content=request.FILES['file'])
     job.status = STATUS_FINISHED
-    job.finished_at = timezone.now()
+    job.job_finished_at = timezone.now()
     job.save()
 
     # successfully processed the request
