@@ -21,7 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+# The default key if important to build the docker image. The real secret key
+# is in the ENV but when building from dockerfile, it does not have access.
+SECRET_KEY = os.getenv("SECRET_KEY", "some-random-key")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.getenv("NODEBUG") is None else False
