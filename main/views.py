@@ -1,6 +1,7 @@
 import base64
 import os
 
+import shortuuid
 from django.contrib.auth import logout as auth_logout
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
@@ -112,6 +113,7 @@ def choose_parameters(request, input_image_id, style_image_id):
             s.user = request.user
             s.input_image = input_image
             s.style_image = style_image
+            s.uuid = shortuuid.ShortUUID().random(length=50)
             s.save()
             return redirect('/artworks/' + str(s.id))
     else:

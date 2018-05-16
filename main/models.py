@@ -88,7 +88,6 @@ class Job(models.Model):
         MaxValueValidator(1),
         MinValueValidator(0)
     ])
-    uuid = models.CharField(max_length=50, unique=True,
-                            default=shortuuid.ShortUUID().random(length=50))
+    uuid = models.CharField(max_length=50, unique=True)
     output_image = models.ImageField(
         null=True, upload_to=random_output_image_file_path)
