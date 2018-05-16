@@ -50,11 +50,7 @@ class ChooseParamtersForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['style_weight'].widget = NumberInput(
-            attrs={'type': 'range', 'min': '0', 'max': '100', 'steps': '0.01'})
-
-    def clean_style_weight(self):
-        style_weight = float(self.cleaned_data['style_weight'])
-        return style_weight / 100
+            attrs={'type': 'range', 'min': '0', 'max': '1', 'step': 'any', 'value': '1'})
 
     class Meta:
         model = Job
