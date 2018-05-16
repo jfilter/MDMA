@@ -20,11 +20,17 @@
     {% if job.input_image.title != '' %}
       input image title: {{job.input_image.title}} <br />
     {% endif %}
+    {% if job.input_image.description != '' %}
+      input image description: {{job.input_image.description}} <br />
+    {% endif %}
     {% if job.input_image.copyright_notice != '' %}
       input image copyright notice: {{job.input_image.copyright_notice}} <br />
     {% endif %}
     {% if job.style_image.title != '' %}
       style image title: {{job.style_image.title}} <br />
+    {% endif %}
+    {% if job.style_image.description != '' %}
+      style image description: {{job.style_image.description}} <br />
     {% endif %}
     {% if job.style_image.copyright_notice != '' %}
       style image copyright notice: {{job.style_image.copyright_notice}} <br />

@@ -12,13 +12,14 @@ class InputImageForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(InputImageForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = 'Title (optional)'
+        self.fields['description'].label = 'Description (optional)'
         self.fields['copyright_notice'].label = 'Copyright notice (if it\'s not your image)'
         self.fields[
             'public_domain'].label = 'This image is my own work. I hereby waive all copyright and related or neighboring rights together with all associated claims and causes of action with respect to this work to the extent possible under the law ("CC0")'
 
     class Meta:
         model = InputImage
-        fields = ('image', 'title', 'public_domain',
+        fields = ('image', 'title', 'description', 'public_domain',
                   'copyright_notice', 'visibility')
 
     def clean(self):
@@ -66,4 +67,5 @@ class UpdateVisiblityJobForm(forms.ModelForm):
 class UpdateInputImageForm(forms.ModelForm):
     class Meta:
         model = InputImage
-        fields = ('visibility', 'title', 'public_domain', 'copyright_notice',)
+        fields = ('visibility', 'title', 'description',
+                  'public_domain', 'copyright_notice',)

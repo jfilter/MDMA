@@ -163,6 +163,7 @@ def show_input_image(request, input_image_id):
             input_image.visibility = form.cleaned_data['visibility']
             input_image.copyright_notice = form.cleaned_data['copyright_notice']
             input_image.title = form.cleaned_data['title']
+            input_image.description = form.cleaned_data['description']
             input_image.public_domain = form.cleaned_data['public_domain']
             input_image.save()
     else:

@@ -54,6 +54,7 @@ class InputImage(models.Model):
     image = models.ImageField(upload_to=random_input_image_file_path, validators=[
         FileExtensionValidator(['jpg', 'png'])])
     title = models.CharField(max_length=255, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
     public_domain = models.BooleanField(default=False)
     copyright_notice = models.TextField(blank=True, null=True)
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -65,6 +66,7 @@ class StyleImage(models.Model):
     def natural_key(self):
         return (self.image.url)
     title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
     copyright_notice = models.TextField()
     image = models.ImageField(
         upload_to='static/images/style', validators=[FileExtensionValidator(['jpg'])])
