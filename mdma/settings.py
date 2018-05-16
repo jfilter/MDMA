@@ -285,3 +285,6 @@ SOCIAL_AUTH_TWITTER_SECRET = os.getenv("SOCIAL_AUTH_TWITTER_SECRET")
 
 LOGIN_REDIRECT_URL = 'profile'
 LOGIN_URL = '/'
+
+# this shoud be removed as soon as all the files are uploaded to S3
+WHITENOISE_AUTOREFRESH = True
