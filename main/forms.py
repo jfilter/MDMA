@@ -36,9 +36,9 @@ class InputImageForm(forms.ModelForm):
             )
 
     def save(self):
-        image = super(InputImageForm, self).save()
+        input_image_form = super(InputImageForm, self).save()
 
-        original_image = Image.open(image.image)
+        original_image = Image.open(input_image_form.image)
         min_dimension = min(original_image.size)
 
         output_size = (OUTPUT_IMAGE_SIZE, OUTPUT_IMAGE_SIZE) if min_dimension > OUTPUT_IMAGE_SIZE else (
@@ -46,17 +46,27 @@ class InputImageForm(forms.ModelForm):
 
         fixed_image = ImageOps.fit(original_image, output_size)
 
+        # why do I have to get the URL like this?
+        fixed_image_path = f"input/{input_image_form.image.url.split('/')[-1]}"
+
+        # convert transparency to white so we cane save them as JPGEG
+        if fixed_image.mode in ('RGBA', 'LA'):
+            background = Image.new(
+                fixed_image.mode[:-1], fixed_image.size, '#ffffff')
+            background.paste(fixed_image, fixed_image.split()[-1])
+            fixed_image = background
+            default_storage.delete(fixed_image_path)  # delete PNG file
+            fixed_image_path = f"{fixed_image_path.split('.')[0]}.jpg"
+
         # overwrite original image
         # because it's hosted via S3, it's a little bit more complicated
         fixed_image_file_string = BytesIO()
         fixed_image.save(fixed_image_file_string, 'JPEG')
-        # why do I have to get the URL like this?
-        the_image_url = f"input/{image.image.url.split('/')[-1]}"
 
-        default_storage.save(the_image_url, ContentFile(
+        default_storage.save(fixed_image_path, ContentFile(
             fixed_image_file_string.getvalue()))
 
-        return image
+        return input_image_form
 
 
 class ChooseParamtersForm(forms.ModelForm):

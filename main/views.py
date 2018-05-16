@@ -71,6 +71,13 @@ def upload_input_image(request):
             # first save form, then add current user
             s.user = request.user
             s.save()
+
+            # hotfix to change .png to .jpg (because we converted them)
+            if s.image.url.lower().endswith('.png'):
+                filename_without_ext = s.image.url.split('/')[-1].split('.')[0]
+                s.image = f"input/{filename_without_ext}.jpg"
+                s.save()
+
             return redirect('/new/' + str(s.id))
     else:
         form = InputImageForm()
