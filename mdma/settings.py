@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'raven.contrib.django.raven_compat',
     'social_django',
+    'storages',
     'main'
 ]
 
@@ -247,6 +248,7 @@ LOGGING = {
     },
 }
 
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
@@ -286,5 +288,12 @@ SOCIAL_AUTH_TWITTER_SECRET = os.getenv("SOCIAL_AUTH_TWITTER_SECRET")
 LOGIN_REDIRECT_URL = 'profile'
 LOGIN_URL = '/'
 
-# this shoud be removed as soon as all the files are uploaded to S3
-WHITENOISE_AUTOREFRESH = True
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+AWS_STORAGE_BUCKET_NAME = 'mdma-images'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+DEFAULT_FILE_STORAGE = 'mdma.storage_backends.ImageStorage'

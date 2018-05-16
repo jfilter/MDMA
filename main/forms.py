@@ -1,7 +1,10 @@
-from PIL import Image, ImageOps
+from io import BytesIO
 
 from django import forms
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.forms import NumberInput
+from PIL import Image, ImageOps
 
 from .models import InputImage, Job
 
@@ -42,8 +45,17 @@ class InputImageForm(forms.ModelForm):
             min_dimension, min_dimension)
 
         fixed_image = ImageOps.fit(original_image, output_size)
+
         # overwrite original image
-        fixed_image.save(image.image.url)
+        # because it's hosted via S3, it's a little bit more complicated
+        fixed_image_file_string = BytesIO()
+        fixed_image.save(fixed_image_file_string, 'JPEG')
+        # why do I have to get the URL like this?
+        the_image_url = f"input/{image.image.url.split('/')[-1]}"
+
+        default_storage.save(the_image_url, ContentFile(
+            fixed_image_file_string.getvalue()))
+
         return image
 
 

@@ -35,11 +35,11 @@ def random_file_path(prefix, filename):
 
 
 def random_input_image_file_path(instance, filename):
-    return random_file_path('static/images/input/', filename)
+    return random_file_path('input/', filename)
 
 
 def random_output_image_file_path(instance, filename):
-    return random_file_path('static/images/output/', filename)
+    return random_file_path('output/', filename)
 
 
 class User(AbstractUser):

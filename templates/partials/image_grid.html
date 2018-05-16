@@ -3,9 +3,9 @@
     <div>
       <a href="{% url 'artwork' job_id=job.id %}">
         {% if job.output_image %}
-          <img src="/{{ job.output_image.url }}" /> <br/>
+          <img src="{{ job.output_image.url }}" /> <br/>
         {% else %}
-          <img src="/{{ job.input_image.image.url }}" /> <br/>
+          <img src="{{ job.input_image.image.url }}" /> <br/>
         {% endif %}
       </a>
       {{job.get_status_display}}<br />

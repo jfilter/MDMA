@@ -5,14 +5,14 @@
 {% block content %}
 <h2>create a new artwork</h2>
 <h3>1. choose input image</h3>
-<img class="small-image" src="/{{ input_image.image.url }}" />
+<img class="small-image" src="{{ input_image.image.url }}" />
 <br /><a href="{% url 'new' %}">choose other input image</a>
 <h3>2. choose style image</h3>
 
 <div class="image-grid">
   {% for image in style_images %}
     <div>
-      <img src="/{{ image.image.url }}" /><br/>
+      <img src="{{ image.image.url }}" /><br/>
       title: {{image.title}}<br/>
       description: {{image.description}}<br/>
       copyright notice: {{image.copyright_notice}}<br/>
