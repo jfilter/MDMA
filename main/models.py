@@ -69,7 +69,7 @@ class StyleImage(models.Model):
     description = models.TextField(blank=True, null=True)
     copyright_notice = models.TextField()
     image = models.ImageField(
-        upload_to='static/images/style', validators=[FileExtensionValidator(['jpg'])])
+        upload_to='style', validators=[FileExtensionValidator(['jpg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 
