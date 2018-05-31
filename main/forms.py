@@ -61,7 +61,8 @@ class InputImageForm(forms.ModelForm):
         # overwrite original image
         # because it's hosted via S3, it's a little bit more complicated
         fixed_image_file_string = BytesIO()
-        fixed_image.save(fixed_image_file_string, 'JPEG')
+        fixed_image.save(fixed_image_file_string, 'JPEG',
+                         subsampling=0, quality=90)
 
         default_storage.save(fixed_image_path, ContentFile(
             fixed_image_file_string.getvalue()))
