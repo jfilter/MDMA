@@ -99,7 +99,7 @@ def choose_style(request, input_image_id):
         raise PermissionDenied
 
     style_images_list = StyleImage.objects.all()
-    paginator = Paginator(style_images_list, 5)
+    paginator = Paginator(style_images_list, 20)
     page = request.GET.get('page')
     style_images = paginator.get_page(page)
 
@@ -133,7 +133,7 @@ def choose_parameters(request, input_image_id, style_image_id):
 
 def input_images(request):
     image_list = InputImage.objects.filter(visibility=VISIBILITY_PUBLIC)
-    paginator = Paginator(image_list, 10)
+    paginator = Paginator(image_list, 20)
 
     page = request.GET.get('page')
     images = paginator.get_page(page)
@@ -146,7 +146,7 @@ def input_images(request):
 @login_required
 def my_input_images(request):
     image_list = InputImage.objects.filter(user=request.user)
-    paginator = Paginator(image_list, 10)
+    paginator = Paginator(image_list, 20)
 
     page = request.GET.get('page')
     images = paginator.get_page(page)
@@ -207,11 +207,13 @@ def jobs(request):
         if request.user is None:
             raise PermissionDenied
 
-        jobs_list = Job.objects.filter(user=request.user)
+        jobs_list = Job.objects.filter(user=request.user).order_by(
+            '-job_created_at')
     else:
-        jobs_list = Job.objects.filter(visibility=VISIBILITY_PUBLIC)
+        jobs_list = Job.objects.filter(visibility=VISIBILITY_PUBLIC).order_by(
+            '-job_created_at')
 
-    paginator = Paginator(jobs_list, 10)
+    paginator = Paginator(jobs_list, 9 * 3)
 
     page = request.GET.get('page')
     jobs = paginator.get_page(page)
