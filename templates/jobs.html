@@ -13,9 +13,9 @@
 {% endif %}
 
 {% if my %}
-  {% include "partials/image_grid.html" with jobs=jobs show_status=true %}
+  {% include "partials/image_grid.html" with jobs=jobs show_status=True %}
 {% else %}
-  {% include "partials/image_grid.html" with jobs=jobs show_status=false %}
+  {% include "partials/image_grid.html" with jobs=jobs show_status=False %}
 {% endif %}
 
 {% include "partials/pagination.html" with paginator=jobs %}
