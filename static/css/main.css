@@ -65,7 +65,13 @@ header h1 a {
 }
 
 .image-grid img {
-  width: 200px;
+  width: 97%;
+}
+
+@media (min-width: 455px) {
+  .image-grid img {
+    width: 200px;
+  }
 }
 
 .small-image {
