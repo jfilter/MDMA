@@ -8,7 +8,9 @@
           <img src="{{ job.input_image.image.url }}" /> <br/>
         {% endif %}
       </a>
-      {{job.get_status_display}}<br />
+      {% if show_status %}
+        {{job.get_status_display}}<br />
+      {% endif %}
     </div>
   {% endfor %}
 </div>

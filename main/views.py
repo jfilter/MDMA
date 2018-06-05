@@ -24,7 +24,8 @@ from .models import (
 
 
 def index(request):
-    jobs = Job.objects.filter(visibility=VISIBILITY_PUBLIC).all()[:9]
+    jobs = Job.objects.filter(visibility=VISIBILITY_PUBLIC, status=STATUS_FINISHED).order_by(
+        '-job_finished_at').all()[:9]
 
     return render(request, "index.html", {'jobs': jobs})
 
