@@ -208,10 +208,10 @@ def jobs(request):
             raise PermissionDenied
 
         jobs_list = Job.objects.filter(user=request.user).order_by(
-            '-job_created_at')
+            '-created_at')
     else:
         jobs_list = Job.objects.filter(visibility=VISIBILITY_PUBLIC).order_by(
-            '-job_created_at')
+            '-created_at')
 
     paginator = Paginator(jobs_list, 9 * 3)
 
