@@ -5,10 +5,9 @@
 {% block content %}
 <h2>artwork #{{job.id}}</h3>
   {% if job.output_image %}
-    <img src="{{ job.output_image.url }}" /> <br />
+    <img src="{{ job.output_image.url }}" />
   {% endif %}
-    <img class="small-image" src="{{ job.input_image.image.url }}" />
-    <img class="small-image" src="{{ job.style_image.image.url }}" />
+    <img class="small-image" src="{{ job.input_image.image.url }}" /><img class="small-image" src="{{ job.style_image.image.url }}" />
     <br />
     style weight: {{job.style_weight}} <br/>
     status: {{job.get_status_display}} <br/>
