@@ -95,7 +95,7 @@ def upload_input_image(request):
 def choose_style(request, input_image_id):
     input_image = InputImage.objects.get(pk=input_image_id)
 
-    if request.user != input_image.user:
+    if input_image.visibility != VISIBILITY_PUBLIC and request.user != input_image.user:
         raise PermissionDenied
 
     style_images_list = StyleImage.objects.all()
