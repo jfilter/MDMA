@@ -57,20 +57,24 @@ header h1 a {
 .image-grid {
   display: flex;
   flex-wrap: wrap;
-  margin: -15px;
+  margin: -2%;
 }
 
 .image-grid > * {
-  padding: 15px;
+  padding: 2%;
 }
 
 .image-grid img {
-  width: 97%;
+  width: 100%;
+}
+
+.image-grid > div {
+  width: 100%;
 }
 
 @media (min-width: 455px) {
-  .image-grid img {
-    width: 200px;
+  .image-grid > div {
+    width: 29%;
   }
 }
 
