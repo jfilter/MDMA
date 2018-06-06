@@ -109,7 +109,7 @@ def choose_style(request, input_image_id):
 @login_required
 def choose_parameters(request, input_image_id, style_image_id):
     input_image = InputImage.objects.get(pk=input_image_id)
-    if request.user != input_image.user:
+    if input_image.visibility != VISIBILITY_PUBLIC and request.user != input_image.user:
         raise PermissionDenied
     style_image = StyleImage.objects.get(pk=style_image_id)
 
