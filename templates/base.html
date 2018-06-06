@@ -6,6 +6,16 @@
     <title>MDMA – Make Deep Art Accessible</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+    <meta property="og:title" content="MDMA – Make Deep Art Accessible" />
+    <meta property="og:description" content="Using deep learning to create new artworks. Upload your image today! A project for Coding Da Vinci Ost 2018, a cultural hackathon." />
+    {% block image %}<meta property="og:image" content="{% static "images/preview.png" %}" />{% endblock %}
+    <meta property="og:url" content="https://mdma.vis.one">
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="MDMA – Make Deep Art Accessible" />
+    <meta property="article:author" content="http://facebook.com/filter0" />
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:creator" content="@mdma_art" />
+
     <link href="{% static "css/normalize.css" %}" rel="stylesheet">
     <link href="{% static "css/main.css" %}" rel="stylesheet">
 </head>

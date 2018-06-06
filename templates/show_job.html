@@ -1,5 +1,15 @@
 {% extends "base.html" %}
 
+{% load static %}
+
+{% block image %}
+  {% if job.output_image %}
+    <meta property="og:image" content="{{ job.output_image.url }}" />
+  {% else %}
+    <meta property="og:image" content="{% static "images/preview.png" %}" />
+  {% endif %}
+{% endblock %}
+
 {% load i18n %}
 
 {% block content %}
