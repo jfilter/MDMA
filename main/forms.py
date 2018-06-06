@@ -16,14 +16,15 @@ class InputImageForm(forms.ModelForm):
         super(InputImageForm, self).__init__(*args, **kwargs)
         self.fields['title'].label = 'Title (optional)'
         self.fields['description'].label = 'Description (optional)'
-        self.fields['copyright_notice'].label = 'Copyright notice (if it\'s not your image)'
         self.fields[
-            'public_domain'].label = 'This image is my own work. I hereby waive all copyright and related or neighboring rights together with all associated claims and causes of action with respect to this work to the extent possible under the law ("CC0")'
+            'copyright_notice'].label = 'Option B: This image is not my own work: Please give the copyright notice (and make sure you are allowed to re-use the image)'
+        self.fields[
+            'public_domain'].label = 'Option A: This image is my own work. I hereby waive all copyright and related or neighboring rights together with all associated claims and causes of action with respect to this work to the extent possible under the law ("CC0")'
 
     class Meta:
         model = InputImage
-        fields = ('image', 'title', 'description', 'public_domain',
-                  'copyright_notice', 'visibility')
+        fields = ('image', 'visibility', 'title', 'description', 'public_domain',
+                  'copyright_notice')
 
     def clean(self):
         cleaned_data = super().clean()

@@ -5,18 +5,18 @@
 {% block content %}
 <h2>create a new artwork</h2>
 <h3>1. choose input image</h3>
-<p>You can upload an input here. The image will be cropped into a square. The length and width of your images should at least be 600 pixels. You can upload your images as JPG or PNG.</p>
+
+a) <a href="{% url 'input_images' %}{{additional}}">select a public image</a> <br/><br/>
+or <br /><br/>
+b) <a href="{% url 'my_input_images' %}{{additional}}">select one of your images</a> <br/><br/>
+or <br /><br/>
+c) upload a new image
+<p>The image will be cropped into a square. The length and width of your images should at least be 600 pixels. You can upload your images as JPG (preferred) or PNG.</p>
 
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit">Upload</button>
 </form>
-<br />
-or <br /><br/>
-
-<a href="{% url 'my_input_images' %}{{additional}}">select an image you already uploaded</a> <br/><br/>
-or <br /><br/>
-<a href="{% url 'input_images' %}{{additional}}">select an already public input image</a> <br/><br/>
 
 {% endblock %}
