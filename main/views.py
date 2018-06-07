@@ -132,7 +132,8 @@ def choose_parameters(request, input_image_id, style_image_id):
 
 
 def input_images(request):
-    image_list = InputImage.objects.filter(visibility=VISIBILITY_PUBLIC)
+    image_list = InputImage.objects.filter(visibility=VISIBILITY_PUBLIC).order_by(
+        '-uploaded_at')
     paginator = Paginator(image_list, 20)
 
     page = request.GET.get('page')
@@ -145,7 +146,8 @@ def input_images(request):
 
 @login_required
 def my_input_images(request):
-    image_list = InputImage.objects.filter(user=request.user)
+    image_list = InputImage.objects.filter(user=request.user).order_by(
+        '-uploaded_at')
     paginator = Paginator(image_list, 20)
 
     page = request.GET.get('page')
