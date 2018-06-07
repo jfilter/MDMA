@@ -6,7 +6,7 @@
   {% if job.output_image %}
     <meta property="og:image" content="{{ job.output_image.url }}" />
   {% else %}
-    <meta property="og:image" content="{% static "images/preview.png" %}" /><meta name="twitter:image" content="{% static "images/preview_twitter.png" %}" />
+    <meta property="og:image" content="{% static "images/preview.png" %}" /><meta name="twitter:image" content="https://mdma.vis.one{% static "images/preview_twitter.png" %}" />
   {% endif %}
 {% endblock %}
 
