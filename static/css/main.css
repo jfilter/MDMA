@@ -78,8 +78,18 @@ header h1 a {
   }
 }
 
-.small-image {
-  width: 300px;
+.small-image, .large-image {
+  width: 100%;
+}
+
+@media (min-width: 600px) {}
+  .small-image {
+    width: 300px;
+  }
+
+  .large-image {
+    width: 600px;
+  }
 }
 
 footer a {
