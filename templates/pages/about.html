@@ -2,16 +2,25 @@
 
 {% load i18n %}
 
+{% load static %}
+
+
 {% block content %}
 
 <h2>about</h2>
 
 <p>
-  We are currently in development. More info in the <a href="https://hackdash.org/projects/5ad235fb35377d7f73a9a157">hackdash</a>. <br /> <br />
+  MDMA allows non-expert users to apply <a href="https://towardsdatascience.com/a-brief-introduction-to-neural-style-transfer-d05d0403901d">style transfer</a> (a deep learning technique) to their image to create new artworks.
 
-  The code is on <a href="https://github.com/jfilter/MDMA">github</a>. <br /> <br />
+  <img src="{% static "images/explanation.jpg" %}" style="width: 100%">
 
-  We are using "Universal Style Transfer via Feature Transforms" by Li, Yijun and Fang, Chen and Yang, Jimei and Wang, Zhaowen and Lu, Xin and Yang, Ming-Hsuan. Here is the <a href="https://github.com/sunshineatnoon/PytorchWCT">code</a> and the <a href="https://arxiv.org/pdf/1705.08086.pdf">paper</a>. It has some advantages over <a href="https://towardsdatascience.com/a-brief-introduction-to-neural-style-transfer-d05d0403901d">traditional neural style transfer</a>. It promises to work better on unseen patterns which we have a lot in our data. In addition, it's fast and efficient so we produce 600x600 px images with a GPU with only 4GB RAM.
+  It's simple to get started. First, you have to choose an input image. You can upload your image or choose an already uploaded, public one. Then, you have to select a style image. The neural network will generate a new picture by mimicing the style of the style image. <br /> <br />
+
+  We are using "Universal Style Transfer via Feature Transforms" published by Yijun Li et al. in 2017 (<a href="https://arxiv.org/pdf/1705.08086.pdf">paper</a>). It has some advantages over <a href="https://arxiv.org/abs/1508.06576">traditional neural style transfer</a>. It promises to work better on unseen patterns which we have a lot in our data. In addition, it's faster and more efficient which allows us to run the computation on CPU. <br /><br />
+
+  You can find the code on <a href="https://github.com/jfilter/MDMA">Github</a> and don't forget to follow on <a href="https://twitter.com/mdma_art">Twitter</a>.<br /> <br />
+
+  Done by <a href="http://johannesfilter.com/">Johannes Filter</a> for the cultural hackathon <a href="https://codingdavinci.de/events/ost/">Coding Da Vinci Ost 2018</a>.
 </p>
 
 {% endblock %}
