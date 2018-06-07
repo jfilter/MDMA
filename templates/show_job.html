@@ -6,7 +6,7 @@
   {% if job.output_image %}
     <meta property="og:image" content="{{ job.output_image.url }}" />
   {% else %}
-    <meta property="og:image" content="{% static "images/preview.png" %}" />
+    <meta property="og:image" content="{% static "images/preview.png" %}" /><meta name="twitter:image" content="{% static "images/preview.png" %}" />
   {% endif %}
 {% endblock %}
 
