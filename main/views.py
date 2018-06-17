@@ -123,7 +123,7 @@ def choose_parameters(request, input_image_id, style_image_id):
             s.style_image = style_image
             s.uuid = shortuuid.ShortUUID().random(length=50)
             s.save()
-            return redirect('/artworks/' + str(s.id))
+            return redirect('/artworks/' + str(s.id) + '/?action=success')
     else:
         form = ChooseParamtersForm()
     return render(request, 'choose_parameters.html', {
@@ -199,7 +199,7 @@ def show_public_job(request, job_id):
         else:
             form = UpdateVisiblityJobForm(instance=job)
 
-    return render(request, 'show_job.html', {'job': job, 'form': form})
+    return render(request, 'show_job.html', {'job': job, 'form': form, 'action': request.GET.get('action')})
 
 
 def jobs(request):
@@ -252,6 +252,12 @@ def get_jobs(request):
         'pk', 'style_weight', 'input_image', 'style_image'), use_natural_foreign_keys=True)
 
     return JsonResponse({'jobs': data})
+
+
+@require_GET
+def get_num_open_jobs(request):
+    num_open_jobs = Job.objects.filter(status=STATUS_WATING).count()
+    JsonResponse({'num_open_jobs': num_open_jobs})
 
 
 @csrf_exempt

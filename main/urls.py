@@ -24,5 +24,6 @@ urlpatterns = [
          views.show_input_image, name="input_image"),
     path('get_jobs/', views.get_jobs, name="get_jobs"),
     path('upload_finished_job/<int:job_id>/',
-         views.upload_finished_job, name="upload_finished_job")
+         views.upload_finished_job, name="upload_finished_job"),
+    path('num_open_jobs/', views.get_num_open_jobs)
 ]
