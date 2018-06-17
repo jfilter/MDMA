@@ -8,8 +8,14 @@
 
 {% if my %}
   <h2>my artworks</h2>
+  <a href="{% url 'artworks' %}">show all artworks</a>
+  <br><br>
 {% else %}
   <h2>artworks</h2>
+  {% if user.is_authenticated %}
+    <a href="{% url 'artworks' %}?my">show my artworks</a>
+    <br><br>
+  {% endif %}
 {% endif %}
 
 {% if my %}
