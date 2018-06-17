@@ -257,7 +257,7 @@ def get_jobs(request):
 @require_GET
 def get_num_open_jobs(request):
     num_open_jobs = Job.objects.filter(status=STATUS_WATING).count()
-    JsonResponse({'num_open_jobs': num_open_jobs})
+    return JsonResponse({'num_open_jobs': num_open_jobs})
 
 
 @csrf_exempt
